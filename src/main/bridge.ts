@@ -31,7 +31,7 @@ export function initPreloadBridge(): { [key: string]: Function } {
         })
       } else if (way === ChannelWay.RENDERER_TO_MAIN__TWO_WAY) {
         Reflect.set(api[name], `${handle.name}`, (...args) => {
-          ipcRenderer.invoke(`${name}:${handle.name}`, ...args)
+          return ipcRenderer.invoke(`${name}:${handle.name}`, ...args)
         })
       }
     })
