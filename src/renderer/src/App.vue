@@ -3,12 +3,12 @@ import Versions from './components/Versions.vue'
 
 const ipcHandle = () => window.electron.ipcRenderer.send('ping')
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const setTitle = () => (window as any).service?.setTitle('Hello Electron')
+const { updateService, openFileService } = window.service
+
+const setTitle = () => updateService.handleSetTitle('Hello Electron')
 
 const openFile = async () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const result = await (window as any).service?.openFile()
+  const result = await openFileService.handleFileOpen()
   console.log('打开文件的路径: ', result)
 }
 </script>

@@ -1,6 +1,6 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { ipcRenderer } from 'electron/renderer'
+import { initPreloadBridge } from '../main/bridge'
 
 // Custom APIs for renderer
 const api = {}
@@ -12,10 +12,7 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
-    contextBridge.exposeInMainWorld('service', {
-      setTitle: (title) => ipcRenderer.send('set-title', title),
-      openFile: () => ipcRenderer.invoke('dialog:openFile')
-    })
+    contextBridge.exposeInMainWorld('service', initPreloadBridge())
   } catch (error) {
     console.error(error)
   }

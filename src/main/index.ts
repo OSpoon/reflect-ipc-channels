@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { handleFileOpen, handleSetTitle } from './business'
+import { initMainBridge } from './bridge'
 
 function createWindow(): void {
   // Create the browser window.
@@ -40,8 +40,7 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  ipcMain.on('set-title', handleSetTitle)
-  ipcMain.handle('dialog:openFile', handleFileOpen)
+  initMainBridge()
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 

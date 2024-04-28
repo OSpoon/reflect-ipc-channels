@@ -4,5 +4,13 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: unknown
+    service: {
+      updateService: {
+        handleSetTitle: (title: string) => void
+      }
+      openFileService: {
+        handleFileOpen: () => Promise<string | undefined>
+      }
+    }
   }
 }
